@@ -283,7 +283,7 @@ VOID *safe_malloc(size_t n)
 {
 	VOID *p;
 	if ((p = malloc(n)) == NULL) {
-		fprintf(stderr, "%s: malloc(%d) failed\n", Progname, n);
+		fprintf(stderr, "%s: malloc(%zd) failed\n", Progname, n);
 		exit(2);
 	}
 	return p;
@@ -293,7 +293,7 @@ VOID *safe_realloc(VOID *p, size_t n)
 {
 	VOID *p1;
 	if ((p1 = realloc(p, n)) == NULL) {
-		fprintf(stderr, "%s: realloc(%d) failed\n", Progname, n);
+		fprintf(stderr, "%s: realloc(%zd) failed\n", Progname, n);
 		exit(2);
 	}
 	return p1;
