@@ -13,6 +13,7 @@
 #endif
 #define  INTERN
 #include "xtail.h"
+#include <string.h>
 
 int sigcaught = 0;
 RETSIGTYPE sigcatcher(int sig);
