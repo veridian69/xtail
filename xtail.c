@@ -212,6 +212,19 @@ int main(int argc, char *argv[])
 	    }
 
 	    /*
+	     * Closed files are stat'ed by pathname.  A replacement must be
+	     * read from the beginning even if its size and mtime match the
+	     * previous file, or it has already grown past the old offset.
+	     */
+	    if (!already_open && (sbuf.st_dev != entryp->dev
+		    || sbuf.st_ino != entryp->ino)) {
+		entryp->size = 0;
+		entryp->mtime = 0;
+		entryp->dev = sbuf.st_dev;
+		entryp->ino = sbuf.st_ino;
+	    }
+
+	    /*
 	     * If nothing has changed then continue on.
 	     */
 	    if (entryp->size==sbuf.st_size && entryp->mtime==sbuf.st_mtime)
@@ -347,11 +360,11 @@ int main(int argc, char *argv[])
 		    rmv_entry(List_dir, i--);
 		    continue;
 		}
-		if (entryp->mtime == sbuf.st_mtime)
-		    continue;
+		/* Rescan even when directory timestamps have not advanced. */
 		if (scan_directory(entryp->name) != 0) {
 		    message(MSSG_OPEN, entryp);
 		    rmv_entry(List_dir, i--);
+		    continue;
 		}
 		entryp->mtime = sbuf.st_mtime;
 	    }

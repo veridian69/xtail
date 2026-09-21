@@ -23,6 +23,14 @@ given on the command line doesn't exist,
 will watch for it and monitor it once created.  When switching files in
 the display, a banner showing the pathname of the file is printed.
 .P
+With the default build settings, directories are rescanned every five
+polling iterations (roughly five seconds), even when their modification
+timestamps have not changed.  Newly discovered files are read from the
+beginning.  Existing files start at their current end; replacement files
+are read from the beginning when their device or inode changes.
+Directory monitoring is not recursive.  Pass the directory itself, rather
+than a shell-expanded wildcard, to discover new filenames.
+.P
 An interrupt character (usually CTRL/C or DEL) will display a list of the
 most recently modified files being watched.  Send a quit signal
 (usually CTRL/backslash) to stop

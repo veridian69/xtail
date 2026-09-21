@@ -19,6 +19,7 @@ DEFS = @DEFS@ -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
+PYTHON = python3
 LDFLAGS = @LDFLAGS@
 CFLAGS = @CFLAGS@ $(DEFS)
 
@@ -26,11 +27,15 @@ TARBALL = xtail.tar
 XTAIL_OBJECTS = xtail.o entryfuncs.o miscfuncs.o
 DISTFILES = Makefile.in README acconfig.h config.h.in configure \
 	configure.in entryfuncs.c install-sh miscfuncs.c xtail.1 xtail.c \
-	xtail.h
+	xtail.h tests/test_watching.py
 
 ###
 
 all : xtail xtail.1
+
+.PHONY: check
+check : xtail
+	$(PYTHON) $(srcdir)/tests/test_watching.py
 
 xtail : $(XTAIL_OBJECTS)
 	$(CC) -o $@ $(LDFLAGS) $(XTAIL_OBJECTS) $(LIBS)
