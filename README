@@ -32,6 +32,7 @@ a lot.  These days, my favorite is:
 	- Run:  sh configure
 	- If you'd like, review the configuration definitions in xtail.h
 	- Run:  make
+	- To run the polling regression tests (requires Python 3):  make check
 	- If you'd like, as root run:  make install
 
 
